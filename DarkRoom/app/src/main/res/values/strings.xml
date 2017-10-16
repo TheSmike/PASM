@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DarkRoom</string>
+    <string name="action_openGallery">Apri Galleria</string>
+    <string name="msg_selectImage">Seleziona Immagine</string>
+    <string name="err_selectImage">Errore nel leggere l\'immagine selezionata</string>
+    <string name="action_Hist">calcola istogramma</string>
+    <string name="msg_loadImageFirst">Bisogna prima caricare un\'immagine!</string>
+
 </resources>
