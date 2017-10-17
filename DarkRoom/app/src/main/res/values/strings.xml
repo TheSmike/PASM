@@ -5,5 +5,9 @@
     <string name="err_selectImage">Errore nel leggere l\'immagine selezionata</string>
     <string name="action_Hist">calcola istogramma</string>
     <string name="msg_loadImageFirst">Bisogna prima caricare un\'immagine!</string>
+    <string name="enhance_gs">vai di grigio</string>
+    <string name="enhance_gs_small">grigio</string>
+    <string name="action_ctgs">converti in grigio</string>
+    <string name="action_eqgsistring">equalizza</string>
 
 </resources>

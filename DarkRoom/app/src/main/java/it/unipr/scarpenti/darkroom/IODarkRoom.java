@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -33,7 +35,7 @@ import org.opencv.imgproc.Imgproc;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class IODarkRoom extends AppCompatActivity {
+public class IODarkRoom extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
 
     private static String TAG = "DarkRoomTag";
     private static final int SELECT_PICTURE = 1;
@@ -57,10 +59,19 @@ public class IODarkRoom extends AppCompatActivity {
         }
     };
 
+    NumberPicker np;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iodark_room);
+
+        np = (NumberPicker) findViewById(R.id.nBin);
+        np.setOnValueChangedListener(this);
+        np.setMinValue(1);
+        np.setMaxValue(256);
+        np.setValue(25);
+        np.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -86,15 +97,34 @@ public class IODarkRoom extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.msg_selectImage)), SELECT_PICTURE);
                 return true;
             case R.id.action_Hist:
-                if (sampledImage == null) {
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.msg_loadImageFirst, Toast.LENGTH_SHORT);
+                return displayHist();
+            case R.id.action_togs:
+                if(sampledImage==null)
+                {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Bisogna prima caricare un'immagine!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                     return true;
                 }
-                Mat histImage = new Mat();
-                sampledImage.copyTo(histImage);
-                calcHist(histImage);
-                displayImage(histImage);
+                greyImage=new Mat();
+                Imgproc.cvtColor(sampledImage,greyImage, Imgproc.COLOR_RGB2GRAY);
+                displayImage(greyImage);
+                return true;
+            case R.id.action_egs:
+                if(greyImage==null)
+                {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Bisogna prima convertire a livelli di grigio!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    return true;
+                }
+                Mat eqGS=new Mat();
+                Imgproc.equalizeHist(greyImage, eqGS);
+                displayImage(eqGS);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -103,8 +133,23 @@ public class IODarkRoom extends AppCompatActivity {
 
     }
 
+    private boolean displayHist() {
+        if (sampledImage == null) {
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.msg_loadImageFirst, Toast.LENGTH_SHORT);
+            toast.show();
+            return true;
+        }
+        np.setVisibility(View.VISIBLE);
+        Mat histImage = new Mat();
+        sampledImage.copyTo(histImage);
+        calcHist(histImage);
+        displayImage(histImage);
+        return true;
+    }
+
+    int mHistSizeNum = 25;
+
     private void calcHist(Mat img) {
-        int mHistSizeNum = 25;
         MatOfInt mHistSize = new MatOfInt(mHistSizeNum);
         Mat hist = new Mat();
         float[] mBuff = new float[mHistSizeNum];
@@ -234,4 +279,9 @@ public class IODarkRoom extends AppCompatActivity {
         return uri.getPath();
     }
 
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        mHistSizeNum = newVal;
+        displayHist();
+    }
 }
