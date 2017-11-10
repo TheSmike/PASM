@@ -7,9 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -36,7 +36,7 @@ import org.opencv.imgproc.Imgproc;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class IODarkRoom extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
+public class IODarkRoomLive extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
 
     private static String TAG = "DarkRoomTag";
     private static final int SELECT_PICTURE = 1;

@@ -9,5 +9,16 @@
     <string name="enhance_gs_small">grigio</string>
     <string name="action_ctgs">converti in grigio</string>
     <string name="action_eqgsistring">equalizza</string>
+    <string name="list_blur">smoothing</string>
+    <string name="list_blur_small">blur</string>
+    <string name="action_average">media</string>
+    <string name="action_gaussian">gaussiano</string>
+    <string name="action_median">mediamo</string>
+    <string name="list_ed">edge detection</string>
+    <string name="list_ed_small">edgeD</string>
+    <string name="action_sobel">sobel</string>
+    <string name="action_canny">canny</string>
+    <string name="action_t_rigida">trasf. rigida</string>
+    <string name="action_t_lasca">trasf. lasca</string>
 
 </resources>
